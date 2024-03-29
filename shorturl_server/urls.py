@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from shorturl_app.views import short_url, redirects, home
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns # new
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,3 +24,6 @@ urlpatterns = [
     path('r/<str:short>', redirects),
     path('', home)
 ]
+
+urlpatterns += staticfiles_urlpatterns() # new
+
