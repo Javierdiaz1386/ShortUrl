@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import View
 from django.http import JsonResponse
 import random
+import os
 import string
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from .models import ShortUrl, Statistics
@@ -17,13 +18,12 @@ def generar_cadena_aleatoria():
 
 
 def home(request):
-    
+    print(os.getcwd())
     return render(request, 'index.html')
 
 @csrf_exempt
 def short_url(request):
     urls = request.POST.get("url")
-    print(urls)
     
     
     if(request.method == 'POST'):
