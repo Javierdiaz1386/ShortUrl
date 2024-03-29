@@ -18,7 +18,7 @@ def generar_cadena_aleatoria():
 
 
 def home(request):
-    print(os.getcwd())
+    print(os.system("ls"))
     return render(request, 'index.html')
 
 @csrf_exempt
