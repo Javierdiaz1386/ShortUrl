@@ -5,6 +5,7 @@ from django.views.generic import View
 from django.http import JsonResponse
 import random
 import os
+import re
 import string
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from .models import ShortUrl, Statistics
@@ -24,31 +25,33 @@ def home(request):
 @csrf_exempt
 def short_url(request):
     urls = request.POST.get("url")
-    
+    patron = re.compile(r'^https?://(?:www\.)?\w+\.\w+$', re.IGNORECASE)
     
     if(request.method == 'POST'):
-        
-        if(urls != ""):
-                
-            id_short = generar_cadena_aleatoria()
-            short_url = f'https://bymaxed.xyz/r/{id_short}'
-            saveto = ShortUrl(url=str(urls), short_url=short_url, id_short=id_short)
-            saveto.save()
-                
-            statics = Statistics(id_short=saveto)
-            statics.save()
-                
-                
-                
-            data = {
-                    "url": urls,
-                    "short_url": short_url 
-                }
-                
-                
-            return JsonResponse(data=data, status=200)
-        
-        
+        try:
+            if(patron.match(urls)):
+                if(urls != ""):
+                    
+                    id_short = generar_cadena_aleatoria()
+                    short_url = f'https://bymaxed.xyz/r/{id_short}'
+                    saveto = ShortUrl(url=str(urls), short_url=short_url, id_short=id_short)
+                    saveto.save()
+                        
+                    statics = Statistics(id_short=saveto)
+                    statics.save()
+                        
+                        
+                        
+                    data = {
+                            "url": urls,
+                            "short_url": short_url 
+                        }
+                        
+                        
+                    return JsonResponse(data=data, status=200)
+        except:
+            return JsonResponse({"Error":"Asegurate de enviar una Url Correcta"}, status=400)
+    return JsonResponse({"Error":"Lee la documentacion"})  
 def redirects(request, short):
     if(request.method == 'GET'):
         shorted = ShortUrl.objects.get(id_short=short)
