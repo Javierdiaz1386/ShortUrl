@@ -5,12 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Short Url</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>  
     <nav class="navbar">
-        <i class="fa-solid fa-anchor"></i>
+        <a href="/"><img src="{% static 'ico/iconL.png' %}" alt=""></a>
         <ul class="links">
             <li><a href="/">Inicio</a></li>
             <li><a href="/statics">Estadisticas</a></li>
@@ -24,7 +24,7 @@
             <input id="url" name="url" type="text" placeholder="Tu url aqui">
             <button id="send">Acortar</button>
         </form>
-        <input id="shortt" type="text" readonly>
+        <input id="shortt" placeholder="ShortUrl" type="text" readonly>
         
     </section>
 
