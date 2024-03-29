@@ -25,7 +25,7 @@ def home(request):
 @csrf_exempt
 def short_url(request):
     urls = request.POST.get("url")
-    patron = re.compile(r'^https?://(?:www\.)?\w+\.\w+$', re.IGNORECASE)
+    patron = re.compile(r'^https?://', re.IGNORECASE)
     
     if(request.method == 'POST'):
         try:
