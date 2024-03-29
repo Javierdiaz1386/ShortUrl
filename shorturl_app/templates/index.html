@@ -43,7 +43,8 @@ but.addEventListener('click', (e)=>{
 
 // Definir los datos que se enviarán en el cuerpo de la solicitud
 const data = new URLSearchParams();
-data.append('url', 'VALOR_DE_LA_URL');
+const ss = document.getElementById('url')
+data.append('url', ss.value);
 
 // Configurar la solicitud
 const options = {
