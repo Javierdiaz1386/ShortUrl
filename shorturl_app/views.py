@@ -16,33 +16,38 @@ def generar_cadena_aleatoria():
 
 
 
+def home(request):
+    
+    return render(request, 'index.html')
+
 @csrf_exempt
 def short_url(request):
-    body = request.body.decode('utf-8')
-    body = json.loads(body)
+    urls = request.POST.get("url")
+    print(urls)
+    
+    
     if(request.method == 'POST'):
-        try:
-            if(body["url"] != ""):
+        
+        if(urls != ""):
                 
-                id_short = generar_cadena_aleatoria()
-                short_url = f'https://localhost:8000/r/{id_short}'
-                saveto = ShortUrl(url=body['url'], short_url=short_url, id_short=id_short)
-                saveto.save()
+            id_short = generar_cadena_aleatoria()
+            short_url = f'https://bymaxed.xyz/r/{id_short}'
+            saveto = ShortUrl(url=str(urls), short_url=short_url, id_short=id_short)
+            saveto.save()
                 
-                statics = Statistics(id_short=saveto)
-                statics.save()
+            statics = Statistics(id_short=saveto)
+            statics.save()
                 
                 
                 
-                data = {
-                    "url": body["url"],
+            data = {
+                    "url": urls,
                     "short_url": short_url 
                 }
                 
                 
             return JsonResponse(data=data, status=200)
-        except:
-            return JsonResponse({"Error": "Asegurate de mandar el campo url"}, status=400)
+        
         
 def redirects(request, short):
     if(request.method == 'GET'):

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>  
+    <nav class="navbar">
+        <i class="fa-solid fa-anchor"></i>
+        <ul class="links">
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/statics">Estadisticas</a></li>
+        </ul>
+    </nav>
+    <section class="principal">
+        <h1>Acorta Tu Url!</h1>
+  
+        <form>
+            {% csrf_token %}
+            <input id="url" name="url" type="text" placeholder="Tu url aqui">
+            <button id="send">Acortar</button>
+        </form>
+        <input id="shortt" type="text" readonly>
+        
+    </section>
+
+    <footer><p>Hecho con ❤️ por Maxfree</p></footer>
+</body>
+<script src="https://kit.fontawesome.com/4d98373447.js" crossorigin="anonymous"></script>
+
+<script>
+
+const but = document.getElementById('send')
+but.addEventListener('click', (e)=>{
+    e.preventDefault()
+    const url = 'https://bymaxed.xyz/shorturl/';
+    // Definir la URL a la que se enviará la petición
+
+
+// Definir los datos que se enviarán en el cuerpo de la solicitud
+const data = new URLSearchParams();
+data.append('url', 'VALOR_DE_LA_URL');
+
+// Configurar la solicitud
+const options = {
+  method: 'POST',
+  body: data
+};
+
+// Realizar la solicitud utilizando Fetch API
+fetch(url, options)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Ocurrió un error al realizar la solicitud.');
+    }
+    return response.json();
+  })
+  .then(data => {
+    const urlshorted = document.getElementById('shortt')
+    urlshorted.value = data.short_url
+    // Manejar la respuesta del servidor
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Manejar errores
+  });
+
+})
+</script>
+</html>
